@@ -13,14 +13,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.image.*;
 import java.util.Random;
 import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.util.Duration;
 
 /**
  *
  * @author 2484936
  */
 public class Lab_07_B_Antonia_Stoleru extends Application {
-
+    String link = "file:images/";
+    int idx = 0;
     /**
      * @param args the command line arguments
      */
@@ -30,35 +35,38 @@ public class Lab_07_B_Antonia_Stoleru extends Application {
 
     @Override
     public void start(Stage stage) {
-       
-        
        BorderPane root = new BorderPane();
-       Scene sc = new Scene(root, 250, 300);
-       stage.setTitle("Java Games");
        
        Button play = new Button("Play");
        Button speedPlus = new Button("Speed +");
        Button speedMinus = new Button("Speed -");
+ 
+       int[] numb = {101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 
+                     111, 112, 113, 114, 115, 116, 117, 118, 119, 120};
        
-       Label lblImage = new Label("");
-       StackPane middle = new StackPane(lblImage);
-       Label top = new Label("Random game");
-       Label bottom = new Label("Waiting...");
-       
-       root.setTop(top);
-       root.setBottom(bottom);
-       root.setCenter(middle);
-       
-       FadeTransition fade = new FadeTransition();
+       Image image1 = new Image(link);
+              
+       FadeTransition fade = new FadeTransition(Duration.millis(2000), new ImageView(image1));
+       fade.setFromValue(1);
+       fade.setFromValue(0);
        
        play.setOnAction(e -> {
-           if(play.getText() == "Play") {
-               play.setText("Pause");
-               
+           if (idx < 20) {
+               link += numb[idx] + ".jpg";
+                idx++;
            } else {
-               play.setText("Play");
+               idx = 0;
+               link += numb[idx] + ".jpg";
+               idx++;
            }
            
+           if (play.getText() == "Play") {
+               play.setText("Pause");
+               fade.play();
+           } else {
+               play.setText("Play");
+               fade.stop();
+           }
        });
        
        speedPlus.setOnAction(e -> {
@@ -69,15 +77,7 @@ public class Lab_07_B_Antonia_Stoleru extends Application {
            
        });
        
-       Random r = new Random();
-       int rand = r.nextInt(20) + 101;
-       
-       String link = "file:images/" + rand + ".jpg";
-       
-       Image image = new Image(link);
-       
-       lblImage.setGraphic(new ImageView(image));
-       
+       Scene sc = new Scene(root, 250, 300);
        stage.setScene(sc);
        stage.show();
     }
