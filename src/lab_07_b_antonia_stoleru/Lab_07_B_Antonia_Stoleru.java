@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.*;
 import java.util.Random;
+import javafx.animation.FadeTransition;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -28,9 +30,15 @@ public class Lab_07_B_Antonia_Stoleru extends Application {
 
     @Override
     public void start(Stage stage) {
+       
+        
        BorderPane root = new BorderPane();
        Scene sc = new Scene(root, 250, 300);
        stage.setTitle("Java Games");
+       
+       Button play = new Button("Play");
+       Button speedPlus = new Button("Speed +");
+       Button speedMinus = new Button("Speed -");
        
        Label lblImage = new Label("");
        StackPane middle = new StackPane(lblImage);
@@ -40,6 +48,26 @@ public class Lab_07_B_Antonia_Stoleru extends Application {
        root.setTop(top);
        root.setBottom(bottom);
        root.setCenter(middle);
+       
+       FadeTransition fade = new FadeTransition();
+       
+       play.setOnAction(e -> {
+           if(play.getText() == "Play") {
+               play.setText("Pause");
+               
+           } else {
+               play.setText("Play");
+           }
+           
+       });
+       
+       speedPlus.setOnAction(e -> {
+           
+       });
+       
+       speedMinus.setOnAction(e -> {
+           
+       });
        
        Random r = new Random();
        int rand = r.nextInt(20) + 101;
